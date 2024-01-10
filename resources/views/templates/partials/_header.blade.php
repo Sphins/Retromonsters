@@ -39,7 +39,7 @@
       <!-- Utilisation d'un bouton pour ouvrir le menu déroulant de l'utilisateur -->
       <div class="relative" x-data="{ userMenuOpen: false }">
         <button @click="userMenuOpen = !userMenuOpen" class="text-white">
-          <img src="/storage/img//user.webp" alt="" class="w-16" />
+          <img src="/storage/img/user.webp" alt="" class="w-16" />
         </button>
 
         <div
