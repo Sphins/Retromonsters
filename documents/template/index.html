@@ -669,7 +669,7 @@
               var slider = document.getElementById("slider-pv");
               var minPv = document.getElementById("min-pv");
               var maxPv = document.getElementById("max-pv");
-              var sliderValue = document.getElementById("slider-pv-value");
+              var sliderPvValue = document.getElementById("slider-pv-value");
 
               noUiSlider.create(slider, {
                 start: [20, 80], // Valeurs initiales pour min et max PV
@@ -683,7 +683,7 @@
               slider.noUiSlider.on("update", function (values, handle) {
                 minPv.value = values[0];
                 maxPv.value = values[1];
-                sliderValue.innerHTML = "PV: " + values.join(" - ");
+                sliderPvValue.innerHTML = "PV: " + values.join(" - ");
               });
             </script>
           </div>
@@ -699,7 +699,7 @@
               var slider = document.getElementById("slider-attaque");
               var minAttaque = document.getElementById("min-attaque");
               var maxAttaque = document.getElementById("max-attaque");
-              var sliderValue = document.getElementById("slider-attaque-value");
+              var sliderAttValue = document.getElementById("slider-attaque-value");
 
               noUiSlider.create(slider, {
                 start: [20, 80], // Valeurs initiales pour min et max Attaque
@@ -713,7 +713,7 @@
               slider.noUiSlider.on("update", function (values, handle) {
                 minAttaque.value = values[0];
                 maxAttaque.value = values[1];
-                sliderValue.innerHTML = "Attaque: " + values.join(" - ");
+                sliderAttValue.innerHTML = "Attaque: " + values.join(" - ");
               });
             </script>
           </div>
