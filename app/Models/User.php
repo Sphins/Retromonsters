@@ -42,4 +42,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function monsters()
+    {
+        return $this->hasMany(Monster::class);
+    }
+
+    // Les monstres mis en favori par l'utilisateur
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    // Les utilisateurs que cet utilisateur suit
+    public function followings()
+    {
+        return $this->hasMany(Follow::class, 'follower_id');
+    }
+
+    // Les utilisateurs qui suivent cet utilisateur
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'following_id');
+    }
 }
