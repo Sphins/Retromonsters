@@ -16,3 +16,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.home');
 })->name('pages.home');
+
+Route::get('/connection', function () {
+    return view('pages.connection');
+})->name('pages.connection');
+
+Route::get('/monsters', function () {
+    return view('monster.index');
+})->name('monster.index');
+
+Route::get('monsters/{id}/{slug}', function ($id) {
+    return view('monster.show', ['monster' => \App\Models\Monster::find($id)]);
+})->name('monsters.show');
+
+Route::get('/users', function () {
+    return view('user.index');
+})->name('users.index');
