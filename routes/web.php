@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,21 @@ Route::get('monsters/{id}/{slug}', function ($id) {
 Route::get('/users', function () {
     return view('user.index');
 })->name('users.index');
+
+Route::get('my-deck', function () {
+    // Récupération de l'utilisateur actuellement connecté
+    $user = auth()->user();
+
+    // Chargement des monstres favoris de l'utilisateur connecté
+    $favorites = $user->favorites()->with('monster')->get();
+
+    // Extraction des monstres de la collection de favoris
+    $monsters = $favorites->map(function ($favorite) {
+        return $favorite->monster;
+    });
+    return view('user.deck', ['monsters' => $monsters]);
+})->middleware('auth')->name('users.deck');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

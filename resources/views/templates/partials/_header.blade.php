@@ -28,9 +28,14 @@
               <div x-show="userMenuOpen" @click.away="userMenuOpen = false" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-md shadow-lg pb-1 z-50">
                   <div class="text-gray-200 px-4 py-2 bg-gray-400 text-center">Username</div>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Mon Profil</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Mon Deck</a>
+                  <a href="{{ route('users.deck') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Mon Deck</a>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Ajouter un Monstre</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Se Déconnecter</a>
+                  <form action="{{ route('logout') }}" method="POST" class="block">
+                    @csrf
+                    <a href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();" class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700">
+                        Se Déconnecter
+                    </a>
+                </form>
               </div>
           </div>
           @endauth
@@ -47,9 +52,14 @@
 
       @auth
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">Mon Profil</a>
-      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">Mon Deck</a>
+      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="{{ route('users.deck') }}">Mon Deck</a>
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">Ajouter un Monstre</a>
-      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">Se Déconnecter</a>
+      <form action="{{ route('logout') }}" method="POST" class="block">
+        @csrf
+        <a href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();" class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700">
+            Se Déconnecter
+        </a>
+    </form>
       @endauth
   </div>
 </header>

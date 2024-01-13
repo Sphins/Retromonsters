@@ -24,13 +24,13 @@
       </section>
 
   <!-- Section suivis (visible uniquement si l'utilisateur est connecté) -->
-    @if(auth()->user())
+  @auth
     <section>
       <h2 class="text-2xl font-bold mb-4 creepster">
         Derniers monstres ajoutés par les utilisateurs que vous suivez
       </h2>
       @php
-          $followedUsers = auth()->user()->followings()->pluck('followed_id');
+          $followedUsers = auth()->user()->followings()->pluck('following_id');
           $monsters = \App\Models\Monster::whereIn('user_id', $followedUsers)
                       ->orderBy('created_at', 'DESC')
                       ->limit(3)
@@ -40,5 +40,5 @@
           'monsters' => $monsters
       ])
   </section>
-  @endif
+  @endauth
 @stop

@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Follow::class, 'following_id');
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(MonsterFeedback::class, 'user_id');
+    }
 }

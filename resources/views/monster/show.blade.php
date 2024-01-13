@@ -42,6 +42,9 @@
               <h2 class="text-3xl font-bold mb-2 creepster">
                 {{$monster->name}}
               </h2>
+              <div>
+                <span class="text-gray-300">{{$monster->rarity}}</span>
+              </div>
               <p class="text-gray-300 text-sm mb-4">
                 {{$monster->description}}
               </p>
@@ -64,13 +67,35 @@
                 </div>
                 <div>
                   <strong class="text-white">Défense:</strong>
-                  <span class="text-gray-300">100</span>
+                  <span class="text-gray-300">{{$monster->defense}}</span>
                 </div>
               </div>
-              <div class="mb-4">
-                <span class="text-yellow-400">★★★★☆</span>
-                <span class="text-gray-300 text-sm">(4.0/5.0)</span>
-              </div>
+         <!-- Logique pour afficher les étoiles -->
+         @php
+         $averageRating = round(($monster->average_rating ?? 0) * 2) / 2;
+         $fullStars = floor($averageRating);
+         $halfStar = $averageRating - $fullStars >= 0.5 ? 1 : 0;
+         $emptyStars = 5 - $fullStars - $halfStar;
+     @endphp
+     
+     <div class="mb-4">
+         {{-- Étoiles pleines --}}
+         @for ($i = 0; $i < $fullStars; $i++)
+             <span class="text-yellow-400">&#9733;</span> {{-- Pleine étoile --}}
+         @endfor
+     
+         {{-- Demi-étoile --}}
+         @if ($halfStar)
+             <span class="text-yellow-400">&#9734;</span> {{-- Demi étoile --}}
+         @endif
+     
+         {{-- Étoiles vides --}}
+         @for ($i = 0; $i < $emptyStars; $i++)
+             <span class="text-gray-300">&#9734;</span> {{-- Étoile vide --}}
+         @endfor
+     
+         <span class="text-gray-300 text-sm">({{ number_format($averageRating, 1) }}/5.0)</span>
+     </div>
               <div class="">
                 <a
                   href="monster.html"
@@ -84,6 +109,7 @@
       </section>
 
       <!-- Section d'évaluation -->
+      @auth
       <div class="mt-6">
         <h3 class="text-2xl font-bold mb-4">Évaluez ce Monstre</h3>
         <div id="rating-section" class="flex items-center">
@@ -94,6 +120,7 @@
           <span class="rating-star" data-value="5">&#9733;</span>
         </div>
       </div>
+      @endauth
       <script>
         document.querySelectorAll(".rating-star").forEach((star) => {
           star.onclick = function () {
@@ -117,26 +144,18 @@
         <h3 class="text-2xl font-bold mb-4">Commentaires</h3>
         <div id="commentaires-section">
           <!-- Commentaire 1 -->
+          @foreach ($monster->feedbacks as $feedback)
           <div class="mb-4 bg-gray-800 rounded p-4">
-            <p class="font-bold text-red-400">Utilisateur1</p>
-            <p class="text-sm text-gray-400">12/01/2024</p>
+            <p class="font-bold text-red-400">{{$feedback->user->username}}</p>
+            <p class="text-sm text-gray-400">{{ \Carbon\Carbon::parse($feedback->updated_at)->format('d/m/Y') }}</p>
             <p class="text-gray-300 mt-2">
-              Très intéressant ce monstre, j'aime particulièrement ses
-              capacités spéciales!
+              {{$feedback->comment}}
             </p>
           </div>
-
-          <!-- Commentaire 2 -->
-          <div class="mb-4 bg-gray-800 rounded p-4">
-            <p class="font-bold text-red-400">Utilisateur2</p>
-            <p class="text-sm text-gray-400">13/01/2024</p>
-            <p class="text-gray-300 mt-2">
-              J'ai eu l'occasion de voir ce monstre en action, et c'était
-              vraiment impressionnant!
-            </p>
-          </div>
+          @endforeach
         </div>
         <!-- Formulaire de commentaire -->
+        @auth
         <div class="bg-gray-800 rounded p-4">
           <h4 class="font-bold text-lg text-red-500 mb-2">
             Laissez un commentaire
@@ -152,6 +171,7 @@
             Envoyer
           </button>
         </div>
+        @endauth
       </div>
     </section>
   </div>

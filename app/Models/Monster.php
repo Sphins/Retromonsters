@@ -24,4 +24,12 @@ class Monster extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+    public function feedbacks()
+    {
+        return $this->hasMany(MonsterFeedback::class, 'monster_id');
+    }
+    public function getAverageRatingAttribute()
+    {
+        return MonsterAverageRating::where('monster_id', $this->id)->value('average_rating');
+    }
 }
